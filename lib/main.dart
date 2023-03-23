@@ -1,5 +1,8 @@
 import 'package:bloc_structure/config/theme/theme.dart';
-import 'package:bloc_structure/screens/home/home_view.dart';
+import 'package:bloc_structure/blocs/global/global_bloc.dart';
+import 'package:bloc_structure/routes/navigator_route.dart';
+import 'package:bloc_structure/screens/home/home_screen.dart';
+import 'package:bloc_structure/blocs/splash/splash_bloc.dart';
 import 'package:bloc_structure/simple_bloc_delegate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,11 +17,22 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: true ? ThemeResource().darkTheme : ThemeResource().lightTheme,
-      //TODO : Theme notifier implement
-      home: const HomeView(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<GlobalBloc>(
+          create: (BuildContext context) => GlobalBloc(),
+        ),
+        BlocProvider<SplashBloc>(
+          create: (BuildContext context) => SplashBloc(),
+        ),
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        routes: NavigatorRoute.routes,
+        initialRoute: NavigatorRoute.root,
+        theme: true ? ThemeResource().darkTheme : ThemeResource().lightTheme,
+        //TODO : Theme notifier implement
+      ),
     );
   }
 }

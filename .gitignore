@@ -21,3 +21,7 @@ doc/api/
 *.js.map
 .idea/vcs.xml
 .idea/*
+/windows/
+/web/
+/macos/
+/linux/
