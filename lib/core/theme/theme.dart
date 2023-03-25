@@ -1,6 +1,6 @@
-import 'package:bloc_structure/config/theme/dart_theme_colors.dart';
-import 'package:bloc_structure/config/theme/light_theme_colors.dart';
-import 'package:bloc_structure/config/utils.dart';
+import 'package:bloc_structure/core/theme/dart_theme_colors.dart';
+import 'package:bloc_structure/core/theme/light_theme_colors.dart';
+import 'package:bloc_structure/core/utils.dart';
 import 'package:flutter/material.dart';
 
 class ThemeResource {

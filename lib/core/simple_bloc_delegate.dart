@@ -1,4 +1,4 @@
-import 'package:bloc_structure/logger.dart';
+import 'package:bloc_structure/core/logger.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SimpleBlocDelegate extends BlocObserver {

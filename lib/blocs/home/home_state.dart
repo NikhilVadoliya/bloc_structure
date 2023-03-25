@@ -1,13 +1,41 @@
-abstract class HomeState {
-  final int value;
+import 'package:bloc_structure/data/model/user.dart';
+import 'package:equatable/equatable.dart';
 
-  HomeState(this.value);
+abstract class HomeState extends Equatable {
+  const HomeState();
 }
 
-class InitState extends HomeState {
-  InitState() : super(0);
+class Ideal extends HomeState {
+  const Ideal() : super();
+
+  @override
+  List<Object?> get props => [];
 }
 
-class UpdateValueState extends HomeState {
-  UpdateValueState(super.value);
+class Loading extends HomeState {
+  @override
+  List<Object?> get props => [];
+}
+
+class GetUser extends HomeState {
+  final List<User> user;
+
+  const GetUser(this.user);
+
+  @override
+  List<Object?> get props => [user];
+}
+
+class Error extends HomeState {
+  final String message;
+
+  const Error(this.message);
+
+  @override
+  List<Object?> get props => [message];
+}
+
+class RefreshData extends HomeState {
+  @override
+  List<Object?> get props => [];
 }

@@ -1,93 +1,49 @@
-import 'package:bloc_structure/routes/navigator_route.dart';
+import 'package:bloc_structure/blocs/network/network.dart';
+import 'package:bloc_structure/core/app_string.dart';
+import 'package:bloc_structure/core/theme/app_snackbar.dart';
+import 'package:bloc_structure/data/repository/user_remote_repository.dart';
+import 'package:bloc_structure/screens/home/widget/user_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../blocs/global/global.dart';
 import '../../blocs/home/home.dart';
-
-
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    context.read<NetworkBloc>().add(StartListener());
     return BlocProvider<HomeBloc>(
-      create: (_) => HomeBloc(),
+      create: (_) => HomeBloc()..add(GetUserData()),
       child: Builder(builder: (context) {
         return Scaffold(
           backgroundColor: Colors.white,
-          floatingActionButton: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              FloatingActionButton(
-                  heroTag: 'btn1',
-                  onPressed: () {
-                    context.read<HomeBloc>().add(Increment());
-                  },
-                  child: const Icon(
-                    Icons.add,
-                    color: Colors.white,
-                  )),
-              FloatingActionButton(
-                heroTag: 'btn2',
-                onPressed: () {
-                  context.read<HomeBloc>().add(Decrement());
-                },
-                child: const Icon(
-                  Icons.minimize,
-                  color: Colors.white,
-                ),
-              ),
-              FloatingActionButton(
-                heroTag: 'btn3',
-                onPressed: () {
-                  Navigator.pushNamed(context, NavigatorRoute.detail);
-                },
-                child: const Icon(
-                  Icons.deblur,
-                  color: Colors.white,
-                ),
-              ),
-              FloatingActionButton(
-                heroTag: 'btn10',
-                onPressed: () {
-                  context.read<GlobalBloc>().add(AddCartItem());
-                },
-                child: const Icon(
-                  Icons.wordpress_sharp,
-                  color: Colors.white,
-                ),
-              ),
-            ],
-          ),
-          body: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              BlocBuilder<HomeBloc, HomeState>(
-                builder: (context, state) {
-                  if (state is UpdateValueState || state is InitState) {
-                    return Text(
-                      '${state.value}',
-                      style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w800),
-                    );
-                  }
-                  return const Offstage();
-                },
-              ),
-              BlocBuilder<GlobalBloc, GlobalState>(
-                builder: (context, state) {
-                  if (state is UpdatedCartItem || state is InitGlobalState) {
-                    return Text(
-                      '${state.cartCount}',
-                      style: const TextStyle(color: Colors.black),
-                    );
-                  }
-                  return const Offstage();
-                },
-              )
-            ],
+          body: BlocConsumer<HomeBloc, HomeState>(
+            buildWhen: (oldState, newState) => newState != RefreshData(),
+            listener: (context, state) {
+              if (state == RefreshData()) {
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(AppSnackBar.normalSnackBar(AppString.refreshData));
+              }
+            },
+            builder: (context, state) {
+              if (state is GetUser) {
+                final userList = state.user;
+                return ListView.separated(
+                  itemCount: userList.length,
+                  itemBuilder: (_, index) => UserListItem(
+                    user: userList[index],
+                  ),
+                  separatorBuilder: (BuildContext context, int index) => const Divider(),
+                );
+              } else if (state is Loading) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (state is Error) {
+                return Center(child: Text(state.message));
+              }
+              return const Offstage();
+            },
           ),
         );
       }),

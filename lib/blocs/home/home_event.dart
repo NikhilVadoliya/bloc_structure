@@ -1,5 +1,3 @@
 abstract class HomeEvent {}
 
-class Increment extends HomeEvent {}
-
-class Decrement extends HomeEvent {}
+class GetUserData extends HomeEvent {}
