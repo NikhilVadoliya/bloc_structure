@@ -5,23 +5,30 @@ import 'package:bloc_structure/blocs/home/home_state.dart';
 import 'package:bloc_structure/blocs/network/network.dart';
 import 'package:bloc_structure/core/app_string.dart';
 import 'package:bloc_structure/core/logger.dart';
-import 'package:bloc_structure/data/local/user/user_local_repository.dart';
-import 'package:bloc_structure/data/local/user/user_table.dart';
+import 'package:bloc_structure/data/repository/user/user_local_repository.dart';
+import 'package:bloc_structure/data/local/db/user/user_table.dart';
+import 'package:bloc_structure/data/local/share_preference/app_preference.dart';
+
 import 'package:bloc_structure/data/model/user.dart';
 import 'package:bloc_structure/data/remote/api_provider.dart';
-import 'package:bloc_structure/data/repository/user_remote_repository.dart';
+import 'package:bloc_structure/data/repository/user/user_remote_repository.dart';
+import 'package:bloc_structure/data/repository/user/user_repository.dart';
 import 'package:bloc_structure/injector/injector.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  final UserRemoteRepository _userRepository =
-      UserRemoteRepository(Injector.instance.get<BaseApiProvider>());
-  final UserLocalRepository _userLocalRepository =
-      UserLocalRepositoryImpl(appDatabaseManager: Injector.instance.get<AppDatabase>());
+  final UserRepository _userRepository = UserRepository(
+      UserRemoteRepository(Injector.instance.get<BaseApiProvider>()),
+      UserLocalRepositoryImpl(
+          appDatabaseManager: Injector.instance.get<AppDatabase>(),
+          appPreference: Injector.instance.get<AppPreference>()));
+
   final NetworkBloc _networkBloc = Injector.instance.get<NetworkBloc>();
 
   HomeBloc() : super(const Ideal()) {
     on<GetUserData>(_getUserData);
+    on<LastUpdatedRecodeDate>(_getLastUpdateDate);
+    on<AddLastUpdatedRecodeDate>(_updateLastAddedRecodeDate);
   }
 
   Future<void> _getUserData(GetUserData event, Emitter<HomeState> emit) async {
@@ -29,7 +36,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       emit(Loading());
       await _emitUserFromLocalIfHave(event, emit);
       if (await _networkBloc.isConnectedInternet()) {
-        final remoteUsers = await _userRepository.getUserFromRemote();
+        final remoteUsers = await _userRepository.remoteRepository.getUserFromRemote();
+        add(AddLastUpdatedRecodeDate(DateTime.now().millisecondsSinceEpoch));
         await _replaceWithNewDataInLocal(remoteUsers);
         await _emitUserFromLocalIfHave(event, emit);
         emit(RefreshData());
@@ -42,7 +50,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   Future<void> _emitUserFromLocalIfHave(GetUserData event, Emitter<HomeState> emit) async {
     try {
-      final userData = await _userLocalRepository.getUsersFromDB();
+      final userData = await _userRepository.localRepository.getUsersFromDB();
       final hasLocalUserData = userData.isNotEmpty;
       if (hasLocalUserData) {
         List<User> user = userData
@@ -61,10 +69,24 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   Future<void> _replaceWithNewDataInLocal(List<User> remoteUsers) async {
     try {
-      await _userLocalRepository.deleteUsersDB();
-      await _userLocalRepository.insertListOfUserDB(remoteUsers);
+      await _userRepository.localRepository.deleteUsersDB();
+      await _userRepository.localRepository.insertListOfUserDB(remoteUsers);
     } catch (e) {
       rethrow;
     }
+  }
+
+  Future<void> _getLastUpdateDate(LastUpdatedRecodeDate event, Emitter<HomeState> emit) async {
+    emit(LoadingForLastUpdatedRecodeDate());
+    int? updatedTimestamp = await _userRepository.localRepository.getLastUpdateResponseTimeStamp();
+    AppLogger.wtf('----LastUpdate TIME STAMP:  $updatedTimestamp');
+    emit(GetLastUpdatedRecodeDate(updatedTimestamp ?? 0));
+  }
+
+  Future<void> _updateLastAddedRecodeDate(
+      AddLastUpdatedRecodeDate event, Emitter<HomeState> emit) async {
+    await _userRepository.localRepository.lastResponseTimeStamp(event.timeStamp);
+    AppLogger.wtf('----LastUpdate Added TIME STAMP:  ${event.timeStamp}');
+    add(LastUpdatedRecodeDate());
   }
 }

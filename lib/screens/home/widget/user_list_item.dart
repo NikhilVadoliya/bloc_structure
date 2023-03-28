@@ -18,10 +18,14 @@ class UserListItem extends StatelessWidget {
             user.name.fullName,
             style: const TextStyle(fontWeight: FontWeight.w600),
           ),
+         /* Text(
+            user.gender,
+            style: const TextStyle(fontWeight: FontWeight.w600),
+          ),
           Text(user.email, style: const TextStyle(fontWeight: FontWeight.w500)),
           Text(
             user.phone,
-          )
+          )*/
         ],
       ),
     );

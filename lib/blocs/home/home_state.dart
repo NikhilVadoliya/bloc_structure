@@ -5,19 +5,26 @@ abstract class HomeState extends Equatable {
   const HomeState();
 }
 
-class Ideal extends HomeState {
+class UserListState extends HomeState {
+  const UserListState() : super();
+
+  @override
+  List<Object?> get props => throw UnimplementedError();
+}
+
+class Ideal extends UserListState {
   const Ideal() : super();
 
   @override
   List<Object?> get props => [];
 }
 
-class Loading extends HomeState {
+class Loading extends UserListState {
   @override
   List<Object?> get props => [];
 }
 
-class GetUser extends HomeState {
+class GetUser extends UserListState {
   final List<User> user;
 
   const GetUser(this.user);
@@ -26,7 +33,7 @@ class GetUser extends HomeState {
   List<Object?> get props => [user];
 }
 
-class Error extends HomeState {
+class Error extends UserListState {
   final String message;
 
   const Error(this.message);
@@ -36,6 +43,27 @@ class Error extends HomeState {
 }
 
 class RefreshData extends HomeState {
+  @override
+  List<Object?> get props => [];
+}
+
+class LastUpdateDataState extends HomeState {
+  const LastUpdateDataState() : super();
+
+  @override
+  List<Object?> get props => throw UnimplementedError();
+}
+
+class GetLastUpdatedRecodeDate extends LastUpdateDataState {
+  final int timestamp;
+
+  const GetLastUpdatedRecodeDate(this.timestamp);
+
+  @override
+  List<Object?> get props => [timestamp];
+}
+
+class LoadingForLastUpdatedRecodeDate extends LastUpdateDataState {
   @override
   List<Object?> get props => [];
 }

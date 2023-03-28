@@ -36,7 +36,7 @@ abstract class BaseApiProvider {
 }
 
 class APIProvider extends BaseApiProvider {
-  late final Dio _dio = Injector.instance(instanceName: DioProvide.dioInstanceName);
+  final Dio _dio = Injector.instance(instanceName: DioProvide.dioInstanceName);
 
   @override
   Future<Response> deleteMethod(String url,

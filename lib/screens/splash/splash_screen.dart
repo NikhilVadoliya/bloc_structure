@@ -11,16 +11,17 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     context.read<SplashBloc>().add(LaunchScreen());
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.black,
       body: BlocListener<SplashBloc, SplashState>(
         listener: (_, state) {
           if (state is NavigateToHome) {
-            Navigator.of(context).pushNamed(NavigatorRoute.home);
+            Navigator.of(context).pushReplacementNamed(NavigatorRoute.home);
           }
         },
         child: const Center(
           child: Icon(
-            Icons.add,
+            Icons.ac_unit_outlined,
+            size: 120,
             color: Colors.amber,
           ),
         ),
