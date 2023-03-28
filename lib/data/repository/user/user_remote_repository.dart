@@ -19,7 +19,7 @@ class UserRemoteRepositoryImp implements UserRemoteRepository {
     if (response.statusCode == 200) {
       return Future.value(UserResponse.fromJson(response.data['results']).results);
     } else {
-      throw Exception(AppString.somethingWentWrong);
+      throw Exception(somethingWentWrong);
     }
   }
 }

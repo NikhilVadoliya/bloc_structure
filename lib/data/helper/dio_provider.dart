@@ -1,4 +1,4 @@
-import 'package:bloc_structure/core/api_constant.dart';
+import 'package:bloc_structure/data/helper/api_constant.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';

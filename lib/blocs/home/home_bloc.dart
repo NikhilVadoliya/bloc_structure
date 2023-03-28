@@ -44,7 +44,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       }
     } on Exception catch (e) {
       AppLogger.e(e.toString());
-      emit(Error(AppString.somethingWentWrong));
+      emit(const Error(somethingWentWrong));
     }
   }
 

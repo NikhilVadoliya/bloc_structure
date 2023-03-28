@@ -46,7 +46,7 @@ class HomeScreen extends StatelessWidget {
                 builder: (context, state) {
                   if (state is GetLastUpdatedRecodeDate) {
                     return Text(
-                      '${AppString.lastUpdatedOn} ${state.timestamp}',
+                      '$lastUpdatedOn ${state.timestamp}',
                       style: const TextStyle(fontSize: 10),
                     );
                   } else if (state is LoadingForLastUpdatedRecodeDate) {
@@ -69,7 +69,7 @@ class HomeScreen extends StatelessWidget {
                   listener: (context, state) {
                     if (state == RefreshData()) {
                       ScaffoldMessenger.of(context)
-                          .showSnackBar(AppSnackBar.normalSnackBar(AppString.refreshData));
+                          .showSnackBar(AppSnackBar.normalSnackBar(refreshData));
                     }
                   },
                   builder: (context, state) {

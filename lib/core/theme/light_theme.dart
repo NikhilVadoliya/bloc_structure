@@ -1,5 +1,4 @@
 import 'package:bloc_structure/core/theme/app_colour.dart';
-import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 
 final ThemeData lightTheme = ThemeData(

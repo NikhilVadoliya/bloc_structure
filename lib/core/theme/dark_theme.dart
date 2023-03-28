@@ -43,25 +43,25 @@ final ThemeData darkTheme = ThemeData(
   ),
   inputDecorationTheme: const InputDecorationTheme(
     labelStyle: TextStyle(
-      color: LightThemeColor.textColor,
+      color: DarkThemeColor.textColor,
       fontSize: null,
       fontWeight: FontWeight.w400,
       fontStyle: FontStyle.normal,
     ),
     helperStyle: TextStyle(
-      color: LightThemeColor.textColor,
+      color: DarkThemeColor.textColor,
       fontSize: null,
       fontWeight: FontWeight.w400,
       fontStyle: FontStyle.normal,
     ),
     hintStyle: TextStyle(
-      color: LightThemeColor.textColor,
+      color: DarkThemeColor.textColor,
       fontSize: null,
       fontWeight: FontWeight.w400,
       fontStyle: FontStyle.normal,
     ),
     errorStyle: TextStyle(
-      color: LightThemeColor.textColor,
+      color: DarkThemeColor.textColor,
       fontSize: null,
       fontWeight: FontWeight.w400,
       fontStyle: FontStyle.normal,
@@ -71,19 +71,19 @@ final ThemeData darkTheme = ThemeData(
     contentPadding: EdgeInsets.only(top: 12, bottom: 12, left: 0, right: 0),
     isCollapsed: false,
     prefixStyle: TextStyle(
-      color: LightThemeColor.textColor,
+      color: DarkThemeColor.textColor,
       fontSize: null,
       fontWeight: FontWeight.w400,
       fontStyle: FontStyle.normal,
     ),
     suffixStyle: TextStyle(
-      color: LightThemeColor.textColor,
+      color: DarkThemeColor.textColor,
       fontSize: null,
       fontWeight: FontWeight.w400,
       fontStyle: FontStyle.normal,
     ),
     counterStyle: TextStyle(
-      color: LightThemeColor.textColor,
+      color: DarkThemeColor.textColor,
       fontSize: null,
       fontWeight: FontWeight.w400,
       fontStyle: FontStyle.normal,
@@ -140,18 +140,18 @@ final ThemeData darkTheme = ThemeData(
     ),
   ),
   iconTheme: const IconThemeData(
-    color: LightThemeColor.textColor,
+    color: DarkThemeColor.textColor,
     opacity: 1,
     size: 24,
   ),
   primaryIconTheme: const IconThemeData(
-    color: LightThemeColor.textColor,
+    color: DarkThemeColor.textColor,
     opacity: 1,
     size: 24,
   ),
   tabBarTheme: const TabBarTheme(
     indicatorSize: TabBarIndicatorSize.tab,
-    labelColor: LightThemeColor.textColor,
+    labelColor: DarkThemeColor.textColor,
     unselectedLabelColor: Color(0xb2ffffff),
   ),
   dialogTheme: const DialogTheme(

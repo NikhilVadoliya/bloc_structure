@@ -6,7 +6,7 @@ enum SnackBarType { normal, error, success }
 class AppSnackBar {
   AppSnackBar._();
 
-  static SnackBar snackBarNoInternetConnection() => _snackBar(AppString.noInternetConnection);
+  static SnackBar snackBarNoInternetConnection() => _snackBar(noInternetConnection);
 
   static SnackBar normalSnackBar(String message) => _snackBar(message);
 

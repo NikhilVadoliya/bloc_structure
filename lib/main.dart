@@ -7,9 +7,9 @@ import 'package:bloc_structure/injector/injector.dart';
 import 'package:bloc_structure/routes/navigator_route.dart';
 import 'package:bloc_structure/blocs/splash/splash_bloc.dart';
 import 'package:bloc_structure/core/bloc/simple_bloc_delegate.dart';
-import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'blocs/app/app.dart';
 
 void main() {
@@ -48,14 +48,18 @@ class MyApp extends StatelessWidget {
           messengerKey.currentState?.hideCurrentSnackBar();
         }
       }, child: BlocBuilder<ThemeBloc, ThemeState>(builder: (context, state) {
-        return MaterialApp(
-          scaffoldMessengerKey: messengerKey,
-          title: 'Flutter Demo',
-          debugShowCheckedModeBanner: false,
-          routes: NavigatorRoute.routes,
-          initialRoute: NavigatorRoute.root,
-          theme: state.isDark ? darkTheme : lightTheme,
-          //TODO : Theme notifier implement
+        return ScreenUtilInit(
+          designSize: const Size(360, 690),
+          builder: (BuildContext context, Widget? child) {
+            return MaterialApp(
+              scaffoldMessengerKey: messengerKey,
+              title: 'Flutter Demo',
+              debugShowCheckedModeBanner: false,
+              routes: NavigatorRoute.routes,
+              initialRoute: NavigatorRoute.root,
+              theme: state.isDark ? darkTheme : lightTheme,
+            );
+          },
         );
       })),
     );
