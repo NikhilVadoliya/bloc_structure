@@ -18,7 +18,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final UserRepository _userRepository = UserRepository(
-      UserRemoteRepository(Injector.instance.get<BaseApiProvider>()),
+      UserRemoteRepositoryImp(Injector.instance.get<BaseApiProvider>()),
       UserLocalRepositoryImpl(
           appDatabaseManager: Injector.instance.get<AppDatabase>(),
           appPreference: Injector.instance.get<AppPreference>()));
@@ -79,14 +79,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   Future<void> _getLastUpdateDate(LastUpdatedRecodeDate event, Emitter<HomeState> emit) async {
     emit(LoadingForLastUpdatedRecodeDate());
     int? updatedTimestamp = await _userRepository.localRepository.getLastUpdateResponseTimeStamp();
-    AppLogger.wtf('----LastUpdate TIME STAMP:  $updatedTimestamp');
     emit(GetLastUpdatedRecodeDate(updatedTimestamp ?? 0));
   }
 
   Future<void> _updateLastAddedRecodeDate(
       AddLastUpdatedRecodeDate event, Emitter<HomeState> emit) async {
     await _userRepository.localRepository.lastResponseTimeStamp(event.timeStamp);
-    AppLogger.wtf('----LastUpdate Added TIME STAMP:  ${event.timeStamp}');
     add(LastUpdatedRecodeDate());
   }
 }

@@ -6,7 +6,7 @@ import 'package:bloc_structure/core/theme/light_theme.dart';
 import 'package:bloc_structure/injector/injector.dart';
 import 'package:bloc_structure/routes/navigator_route.dart';
 import 'package:bloc_structure/blocs/splash/splash_bloc.dart';
-import 'package:bloc_structure/core/simple_bloc_delegate.dart';
+import 'package:bloc_structure/core/bloc/simple_bloc_delegate.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
