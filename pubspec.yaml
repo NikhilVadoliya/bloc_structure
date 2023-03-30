@@ -56,7 +56,8 @@ dev_dependencies:
     sdk: flutter
   drift_dev: 2.6.0
   build_runner: ^2.1.7
-
+  mockito: ^5.4.0
+  bloc_test: ^9.1.1
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your

@@ -27,3 +27,5 @@ const String forgotPassword = 'Forgot Password?';
 const String newPassword = 'New Password';
 const String confirmPassword = 'Confirm Password';
 const String resetPassword = 'Reset Password';
+
+const String notDataFound = 'No Data Found!';

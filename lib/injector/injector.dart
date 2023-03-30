@@ -1,4 +1,5 @@
-import 'package:bloc_structure/blocs/network/network_bloc.dart';
+import 'package:bloc_structure/core/network/network_provider.dart';
+import 'package:bloc_structure/core/network/network_service.dart';
 import 'package:bloc_structure/data/helper/dio_provider.dart';
 import 'package:bloc_structure/data/local/db/user/user_table.dart';
 import 'package:bloc_structure/data/local/share_preference/app_preference.dart';
@@ -13,12 +14,11 @@ class Injector {
   static void init() {
 
     DioProvide.setup();
+    NetworkService.setup();
     instance.registerSingleton<AppDatabase>(AppDatabase());
     instance.registerLazySingleton<BaseApiProvider>(() => APIProvider());
-    instance.registerLazySingleton<NetworkBloc>(() => NetworkBloc());
-    instance.registerLazySingleton<AppPreference>(
-      () => AppPreferenceImp(),
-    );
+    instance.registerLazySingleton<NetworkProvider>(() => NetworkProviderImp());
+    instance.registerLazySingleton<AppPreference>(() => AppPreferenceImp());
   }
 
   static void reset() {

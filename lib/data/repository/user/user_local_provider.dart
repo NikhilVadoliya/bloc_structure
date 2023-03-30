@@ -3,7 +3,7 @@ import 'package:bloc_structure/data/local/share_preference/app_preference.dart';
 import 'package:bloc_structure/data/local/share_preference/preference_constant.dart';
 import 'package:bloc_structure/data/model/user.dart';
 
-abstract class UserLocalRepository {
+abstract class UserLocalProvider {
   Future<int> insertUserDB(UserLocalCompanion userCompanion);
 
   Future<void> insertListOfUserDB(List<User> user);
@@ -17,8 +17,8 @@ abstract class UserLocalRepository {
   Future<int?> getLastUpdateResponseTimeStamp();
 }
 
-class UserLocalRepositoryImpl implements UserLocalRepository {
-  UserLocalRepositoryImpl({
+class UserLocalProvideImpl implements UserLocalProvider {
+  UserLocalProvideImpl({
     required AppDatabase appDatabaseManager,
     required AppPreference appPreference,
   })  : _appDatabaseManager = appDatabaseManager,

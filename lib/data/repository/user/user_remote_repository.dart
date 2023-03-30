@@ -4,14 +4,14 @@ import 'package:bloc_structure/data/model/user_response.dart';
 import 'package:bloc_structure/data/remote/api_provider.dart';
 import 'package:dio/dio.dart';
 
-abstract class UserRemoteRepository {
+abstract class UserRemoteProvider {
   Future<List<User>> getUserFromRemote();
 }
 
-class UserRemoteRepositoryImp implements UserRemoteRepository {
+class UserRemoteProviderImp implements UserRemoteProvider {
   final BaseApiProvider baseApiProvider;
 
-  UserRemoteRepositoryImp(this.baseApiProvider);
+  UserRemoteProviderImp(this.baseApiProvider);
 
   @override
   Future<List<User>> getUserFromRemote() async {
